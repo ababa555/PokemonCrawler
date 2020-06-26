@@ -134,7 +134,7 @@ func createPokemonNamesCsv(data models.PokemonNames, version string, id string) 
 	path := savePath(version, fileName)
 	var result string
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		result = "\"pokemon_id\",\"local_language_id\",\"name\"" + "\n"
+		result = "\"pokemon_id\",\"local_language_id\",\"name\",\"form_name\"" + "\n"
 	}
 
 	rt := reflect.New(reflect.TypeOf(models.PokemonName{})).Elem().Type()
