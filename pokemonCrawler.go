@@ -134,7 +134,7 @@ func createPokemonNamesCsv(data models.PokemonNames, version string, id string) 
 	path := savePath(version, fileName)
 	var result string
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		result = "\"pokemon_id\",\"local_language_id\",\"name\",\"form_name\"" + "\n"
+		result = "\"pokemonId\",\"localLanguageId\",\"name\",\"formName\"" + "\n"
 	}
 
 	rt := reflect.New(reflect.TypeOf(models.PokemonName{})).Elem().Type()
@@ -152,7 +152,7 @@ func createPokemonStatsCsv(data models.PokemonStats, version string, id string) 
 	path := savePath(version, fileName)
 	var result string
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		result = "\"pokemon_id\",\"hp\",\"attack\",\"defense\",\"sp_attack\",\"sp_defense\",\"speed\"" + "\n"
+		result = "\"pokemonId\",\"hp\",\"attack\",\"defense\",\"spAttack\",\"spDefense\",\"speed\"" + "\n"
 	}
 
 	rt := reflect.New(reflect.TypeOf(models.PokemonStats{})).Elem().Type()
@@ -170,7 +170,7 @@ func createPokemonTypesCsv(data models.PokemonTypes, version string, id string) 
 	path := savePath(version, fileName)
 	var result string
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		result = "\"pokemon_id\",\"type_id\"" + "\n"
+		result = "\"pokemonId\",\"typeId\"" + "\n"
 	}
 
 	rt := reflect.New(reflect.TypeOf(models.PokemonType{})).Elem().Type()
@@ -188,7 +188,7 @@ func createPokemonAbilitiesCsv(data models.PokemonAbilities, version string, id 
 	path := savePath(version, fileName)
 	var result string
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		result = "\"pokemon_id\",\"ability_name\",\"is_hidden\"" + "\n"
+		result = "\"pokemonId\",\"abilityName\",\"isHidden\"" + "\n"
 	}
 
 	rt := reflect.New(reflect.TypeOf(models.PokemonAbility{})).Elem().Type()
@@ -206,7 +206,7 @@ func createPokemonMovesCsv(data models.PokemonMoves, version string, id string) 
 	path := savePath(version, fileName)
 	var result string
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		result = "\"pokemon_id\",\"move_name\"" + "\n"
+		result = "\"pokemonId\",\"moveName\"" + "\n"
 	}
 
 	rt := reflect.New(reflect.TypeOf(models.PokemonMove{})).Elem().Type()
@@ -224,7 +224,7 @@ func createPokemonEvolutionChainsCsv(data models.PokemonEvolutionChains, version
 	path := savePath(version, fileName)
 	var result string
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		result = "\"pokemon_id\",\"evolution_chain_id\",\"order\"" + "\n"
+		result = "\"pokemonId\",\"evolutionChainId\",\"order\"" + "\n"
 	}
 
 	rt := reflect.New(reflect.TypeOf(models.PokemonEvolutionChain{})).Elem().Type()

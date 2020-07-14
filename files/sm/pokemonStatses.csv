@@ -1,4 +1,4 @@
-"pokemon_id","hp","attack","defense","sp_attack","sp_defense","speed"
+"pokemonId","hp","attack","defense","spAttack","spDefense","speed"
 "n1","45","49","49","65","65","45"
 "n2","60","62","63","80","80","60"
 "n3","80","82","83","100","100","80"
