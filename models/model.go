@@ -17,10 +17,10 @@ type Pokemons []Pokemon
 
 // PokemonName ポケモン名
 type PokemonName struct {
-	PokemonID       string `csv:"pokemon_id"`
-	LocalLanguageID int    `csv:"local_language_id"`
+	PokemonID       string `csv:"pokemonId"`
+	LocalLanguageID int    `csv:"localLanguageId"`
 	Name            string `csv:"name"`
-	FormName        string `csv:"form_name"`
+	FormName        string `csv:"formName"`
 }
 
 // PokemonNames ポケモン名のリスト
@@ -28,8 +28,8 @@ type PokemonNames []PokemonName
 
 // PokemonEvolutionChain ポケモンの進化情報
 type PokemonEvolutionChain struct {
-	PokemonID        string `csv:"pokemon_id"`
-	EvolutionChainID string `csv:"evolution_chain_id"`
+	PokemonID        string `csv:"pokemonId"`
+	EvolutionChainID string `csv:"evolutionChainId"`
 	Order            int    `csv:"order"`
 }
 
@@ -38,12 +38,12 @@ type PokemonEvolutionChains []PokemonEvolutionChain
 
 // PokemonStats ポケモンのステータス
 type PokemonStats struct {
-	PokemonID string `csv:"pokemon_id"`
+	PokemonID string `csv:"pokemonId"`
 	Hp        int    `csv:"hp"`
 	Attack    int    `csv:"attack"`
 	Defense   int    `csv:"defense"`
-	SpAttack  int    `csv:"sp_attack"`
-	SpDefense int    `csv:"sp_defense"`
+	SpAttack  int    `csv:"spAttack"`
+	SpDefense int    `csv:"spDefense"`
 	Speed     int    `csv:"speed"`
 }
 
@@ -52,8 +52,8 @@ type PokemonStatses []PokemonStats
 
 // PokemonType ポケモンのタイプ
 type PokemonType struct {
-	PokemonID string `csv:"pokemon_id"`
-	TypeID    Type   `csv:"type_id"`
+	PokemonID string `csv:"pokemonId"`
+	TypeID    Type   `csv:"typeId"`
 }
 
 // PokemonTypes ポケモンのタイプのリスト
@@ -61,9 +61,9 @@ type PokemonTypes []PokemonType
 
 // PokemonAbility ポケモンの特性
 type PokemonAbility struct {
-	PokemonID   string `csv:"pokemon_id"`
-	AbilityName string `csv:"ability_name"`
-	IsHidden    bool   `csv:"is_hidden"`
+	PokemonID   string `csv:"pokemonId"`
+	AbilityName string `csv:"abilityName"`
+	IsHidden    bool   `csv:"isHidden"`
 }
 
 // PokemonAbilities ポケモンの特性のリスト
@@ -71,8 +71,8 @@ type PokemonAbilities []PokemonAbility
 
 // PokemonMove ポケモンの技
 type PokemonMove struct {
-	PokemonID string `csv:"pokemon_id"`
-	MoveName  string `csv:"move_name"`
+	PokemonID string `csv:"pokemonId"`
+	MoveName  string `csv:"moveName"`
 }
 
 // PokemonMoves ポケモンの技のリスト
