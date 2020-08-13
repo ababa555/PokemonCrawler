@@ -182,7 +182,7 @@ func createPokemonTypesCsv(data models.PokemonTypes, version string, id string) 
 }
 
 func createPokemonAbilitiesCsv(data models.PokemonAbilities, version string, id string) {
-	const fileName = "pokemonAbilitie.csv"
+	const fileName = "pokemonAbilities.csv"
 	var list models.PokemonAbilities
 	list = append(list, data...)
 	path := savePath(version, fileName)
