@@ -71,7 +71,7 @@ func createData(data interface{}, rt reflect.Type) string {
 func createMovesCsv(version string) {
 	path := savePath(version, "moves.csv")
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		var result = "\"id\",\"version\",\"name\",\"type\",\"power1\",\"power2\",\"pp\",\"accuracy\",\"priority\",\"damageType\",\"isDirect\",\"canProtect\"" + "\n"
+		var result = "\"id\",\"name\",\"type\",\"power1\",\"power2\",\"pp\",\"accuracy\",\"priority\",\"damageType\",\"isDirect\",\"canProtect\"" + "\n"
 		moves := logics.CretaMoves(version)
 		rt := reflect.New(reflect.TypeOf(models.Move{})).Elem().Type()
 		for _, move := range moves {

@@ -1,4 +1,4 @@
-"id","version","name","type","power1","power2","pp","accuracy","priority","damageType","isDirect","canProtect"
+"id","name","type","power1","power2","pp","accuracy","priority","damageType","isDirect","canProtect"
 "1","アイアンテール","8","100","","15","75","0","物理","false","true"
 "2","アクアジェット","10","40","","20","100","1","物理","false","true"
 "3","あくのはどう","16","80","","15","100","0","特殊","false","true"

@@ -1,4 +1,4 @@
-"id","version","name","type","power1","power2","pp","accuracy","priority","damageType","isDirect","canProtect"
+"id","name","type","power1","power2","pp","accuracy","priority","damageType","isDirect","canProtect"
 "1","Gのちから","11","80","130","10","100","0","物理","false","true"
 "2","アームハンマー","1","100","90","10","90","0","物理","true","true"
 "3","アイアンテール","8","100","130","15","75","0","物理","true","true"
