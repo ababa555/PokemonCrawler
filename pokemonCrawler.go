@@ -4,10 +4,12 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
+	"./helpers"
 	"./logics"
 	"./models"
 
@@ -277,6 +279,96 @@ func isDownloaded(version string, id string) bool {
 func main() {
 	println("処理を開始します...")
 
+	// ポケモン図鑑(https://zukan.pokemon.co.jp)から画像をクローラ
+	crawlerZukan()
+
+	// ポケモン徹底攻略をクローラ
+	crawler()
+}
+
+func sliceUnique(target []string) (unique []string) {
+	m := map[string]bool{}
+
+	for _, v := range target {
+		if !m[v] {
+			m[v] = true
+			unique = append(unique, v)
+		}
+	}
+
+	return unique
+}
+
+func crawlerZukan() {
+	searchNo := "892"
+	for {
+		if searchNo == "892" {
+			println("デバッグ用...")
+		}
+
+		next, subList := crawlerZukanImpl(searchNo)
+		if next == "" {
+			break
+		}
+		searchNo = next
+
+		var targetSubList []string
+		for _, v := range subList {
+			target := strings.Replace(strings.TrimPrefix(strings.Replace(v, `"sub":`, ``, -1), `"`), `,`, "", -1)
+			if target != "0" {
+				targetSubList = append(targetSubList, target)
+			}
+		}
+
+		for _, v := range sliceUnique(targetSubList) {
+			next, _ := crawlerZukanImpl(searchNo + "-" + v)
+			searchNo = next
+		}
+	}
+}
+
+func crawlerZukanImpl(searchNo string) (string, []string) {
+	page, statusCode := logics.VisitZukan(searchNo)
+	if statusCode == 200 {
+		r1 := regexp.MustCompile(`"no":[^,]*",`)
+		r2 := regexp.MustCompile(`"sub":[^,]*,`)
+		r3 := regexp.MustCompile(`"image_m":[^,]*",`)
+		r4 := regexp.MustCompile(`"next":{"no":[^,]*",`)
+
+		noList := r1.FindAllString(page.Find("script").Text(), -1)
+		subList := r2.FindAllString(page.Find("script").Text(), -1)
+		imageList := r3.FindAllString(page.Find("script").Text(), -1)
+		nextList := r4.FindAllString(page.Find("script").Text(), -1)
+
+		no := strings.Replace(strings.TrimPrefix(strings.Replace(noList[0], `"no":`, ``, -1), `"`), `",`, "", -1)
+		sub := strings.Replace(strings.TrimPrefix(strings.Replace(subList[0], `"sub":`, ``, -1), `"`), `,`, "", -1)
+		imageURL := strings.Replace(strings.Replace(strings.TrimPrefix(strings.Replace(imageList[0], `"image_m":`, ``, -1), `"`), `",`, "", -1), `\`, "", -1)
+		next := strings.Replace(strings.TrimPrefix(strings.Replace(nextList[0], `"next":{"no":`, ``, -1), `"`), `",`, "", -1)
+		if searchNo == next {
+			next = ""
+		}
+
+		// 画像を保存
+		downloadURL := strings.TrimSuffix(imageURL, "\n")
+		helpers.ImageDownload(downloadURL, no+"_"+sub+".png")
+		time.Sleep(5000 * time.Millisecond)
+
+		return next, subList
+	}
+	return "", nil
+}
+
+func crawlerDetail(doc *goquery.Document) string {
+	var detailURL string
+	doc.Find("#mu > table:nth-child(5) > tbody > tr:nth-child(3) > td > table > tbody > tr > td:nth-child(1)").Each(func(index int, s2 *goquery.Selection) {
+		s2.Find("img").Each(func(_ int, s2 *goquery.Selection) {
+			detailURL, _ = s2.Attr("src")
+		})
+	})
+	return detailURL
+}
+
+func crawler() {
 	versions := [3]string{
 		"swsh",
 		"pika_vee",

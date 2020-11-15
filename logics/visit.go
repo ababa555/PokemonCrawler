@@ -39,6 +39,15 @@ func createSearchURLMovePage(version string, urlParams string) string {
 	return baseURL.String()
 }
 
+func createSearchURLZukan(no string) string {
+	baseURL, _ := url.Parse(strings.Join([]string{
+		"https://zukan.pokemon.co.jp/detail/",
+		no,
+	}, ""))
+
+	return baseURL.String()
+}
+
 func visitImpl(searchurl string, checkRedirect bool) (*goquery.Document, int) {
 	var resp *http.Response
 	var err error
@@ -100,4 +109,14 @@ func VisitMovePage(version string, searchNo string) *goquery.Document {
 		panic("page not found")
 	}
 	return page
+}
+
+// VisitZukan ポケモン図鑑のページを読み込みます
+func VisitZukan(searchNo string) (*goquery.Document, int) {
+	searchurl := createSearchURLZukan(searchNo)
+	page, statusCode := visitImpl(searchurl, false)
+	if page == nil {
+		return nil, statusCode
+	}
+	return page, statusCode
 }
