@@ -20,10 +20,10 @@ func Run() {
 		*models.NewVersion("3", "swsh"),
 	}
 
-	// // 技一覧
-	// for _, version := range versions {
-	// 	createMovesCsv(version)
-	// }
+	// 技一覧
+	for _, version := range versions {
+		createMovesCsv(version)
+	}
 
 	for _, version := range versions {
 		index := 1

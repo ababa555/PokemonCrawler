@@ -13,7 +13,5 @@ func main() {
 	crawler_info.Run()
 
 	// ポケモン図鑑(https://zukan.pokemon.co.jp)から画像をクローラ
-	if false {
-		crawler_image.Run()
-	}
+	crawler_image.Run()
 }
