@@ -2,6 +2,7 @@ package crawler_info
 
 import (
 	"PokemonCrawler/app/models"
+	"reflect"
 	"strconv"
 	"strings"
 
@@ -11,7 +12,7 @@ import (
 // CreatePokemonMove ポケモンの覚える技を取得します
 func CreatePokemonMove(page *goquery.Document, pokemon models.Pokemon) models.PokemonMoves {
 	var pokemonMoves models.PokemonMoves
-	//page.Find("#move_anchor").Each(func(index int, s *goquery.Selection) {
+
 	page.Find("#move_list > tbody > tr").EachWithBreak(func(index int, s1 *goquery.Selection) bool {
 		name := s1.Find("td.move_name_cell > a").Text()
 		title := s1.Find("#move_list > tbody > tr:nth-child(" + strconv.Itoa(index+1) + ") > th").Text()
@@ -23,10 +24,22 @@ func CreatePokemonMove(page *goquery.Document, pokemon models.Pokemon) models.Po
 				PokemonID: pokemon.ID,
 				MoveName:  name,
 			}
+			if existInPokemonMoves(pokemonMoves, pokemonMove) {
+				return true
+			}
 			pokemonMoves = append(pokemonMoves, pokemonMove)
 		}
 		return true
 	})
-	//})
+
 	return pokemonMoves
+}
+
+func existInPokemonMoves(s []models.PokemonMove, e models.PokemonMove) bool {
+	for _, a := range s {
+		if ok := reflect.DeepEqual(a, e); ok {
+			return true
+		}
+	}
+	return false
 }

@@ -27,9 +27,9 @@ func CreatePokemon(page *goquery.Document, id string, index int, isDefault bool,
 	adjust := map[bool]int{true: 1, false: 0}[hasGaralNo]
 	var no, heightAsString, weightAsString string
 	if version.Name == "pika_vee" {
-		no = page.Find("#contents > div:nth-child(5) > div.table.layout_left > table > tbody > tr:nth-child(4) > td:nth-child(2)").First().Text()
-		heightAsString = page.Find("#contents > div:nth-child(5) > div.table.layout_left > table > tbody > tr:nth-child(5) > td:nth-child(2)").First().Text()
-		weightAsString = page.Find("#contents > div:nth-child(5) > div.table.layout_left > table > tbody > tr:nth-child(6) > td:nth-child(2)").First().Text()
+		no = page.Find("#contents > div:nth-child(4) > div.table.layout_left > table > tbody > tr:nth-child(4) > td:nth-child(2)").First().Text()
+		heightAsString = page.Find("#contents > div:nth-child(4) > div.table.layout_left > table > tbody > tr:nth-child(5) > td:nth-child(2)").First().Text()
+		weightAsString = page.Find("#contents > div:nth-child(4) > div.table.layout_left > table > tbody > tr:nth-child(6) > td:nth-child(2)").First().Text()
 	} else {
 		no = page.Find("#base_anchor > table > tbody > tr:nth-child(" + strconv.Itoa(4+adjust) + ") > td:nth-child(2)").First().Text()
 		heightAsString = page.Find("#base_anchor > table > tbody > tr:nth-child(" + strconv.Itoa(5+adjust) + ") > td:nth-child(2)").First().Text()
