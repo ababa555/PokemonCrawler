@@ -47,27 +47,31 @@ func Run() {
 				continue
 			}
 
-			// ガラル地方のポケモンかどうかを調べる
-			hasGaralNo := getHasGaralNo(version.Name, page)
-
 			// ポケモンの情報をcsvに保存
-			createPokemonInfoCsv(page, searchNo, index, true, hasGaralNo, version)
+			createPokemonInfoCsv(page, searchNo, index, 1, true, version)
 
 			// 他のフォルム
-			forms := getForms(page)
+			forms := getForms(page, index)
+			subIndex := 2
 			for _, form := range forms {
 				searchNo := "n" + form
-				println("処理中...:" + searchNo + "(" + version.Name + ")")
+				println("処理中... " + searchNo + "(" + version.Name + ")")
 
-				page, _ := helpers.Visit(version.Name, searchNo, true)
-				time.Sleep(5000 * time.Millisecond)
+				anotherFormSearchNo := ""
+				// シルヴァディのタイプ別のページはないため、シルヴァディ（ノーマル）のページを読み込む
+				if index == 773 {
+					anotherFormSearchNo = searchNo[:4]
+				} else {
+					anotherFormSearchNo = searchNo
+				}
+
+				page, _ := helpers.Visit(version.Name, anotherFormSearchNo, true)
+				time.Sleep(3000 * time.Millisecond)
 
 				if page != nil {
-					// ガラル地方のポケモンかどうかを調べる
-					hasGaralNo := getHasGaralNo(version.Name, page)
-
 					// ポケモンの情報をcsvに保存
-					createPokemonInfoCsv(page, searchNo, index, false, hasGaralNo, version)
+					createPokemonInfoCsv(page, searchNo, index, subIndex, false, version)
+					subIndex++
 				}
 			}
 
@@ -129,9 +133,9 @@ func getHasGaralNo(version string, page *goquery.Document) bool {
 	return false
 }
 
-func createPokemonInfoCsv(page *goquery.Document, id string, index int, isDefault bool, hasGaralNo bool, version models.Version) {
-	pokemon := CreatePokemon(page, id, index, isDefault, hasGaralNo, version)
-	pokemonNames := CreatePokemonName(page, pokemon, hasGaralNo, version)
+func createPokemonInfoCsv(page *goquery.Document, id string, index int, subIndex int, isDefault bool, version models.Version) {
+	pokemon := CreatePokemon(page, id, index, subIndex, isDefault, version)
+	pokemonNames := CreatePokemonName(page, pokemon, version)
 	pokemonStats := CreatePokemonStats(page, pokemon, version)
 	pokemonTypes := CreatePokemonType(page, pokemon)
 	pokemonMoves := CreatePokemonMove(page, pokemon)
@@ -277,7 +281,29 @@ func createPokemonCsv(data models.Pokemon, version string, id string) {
 	helpers.SaveCsv(result, version, fileName)
 }
 
-func getForms(page *goquery.Document) []string {
+func getForms(page *goquery.Document, index int) []string {
+	if index == 773 {
+		return []string{
+			"773a", // かくとう
+			"773b", // ひこう
+			"773c", // どく
+			"773d", // じめん
+			"773e", // いわ
+			"773f", // むし
+			"773g", // ゴースト
+			"773h", // はがね
+			"773i", // ほのお
+			"773j", // みず
+			"773k", // くさ
+			"773l", // でんき
+			"773m", // エスパー
+			"773n", // こおり
+			"773o", // ドラゴン
+			"773p", // あく
+			"773q", // フェアリー
+		}
+	}
+
 	var forms []string
 	// 他のフォルムがあるか
 	page.Find(".select_list:not(.gen_list):first-child").Each(func(index int, s *goquery.Selection) {

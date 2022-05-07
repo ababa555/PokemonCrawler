@@ -6,8 +6,8 @@ import "errors"
 type Pokemon struct {
 	ID        string `csv:"id"` // n1、n3mなど
 	No        string `csv:"no"` // ぜんこくNo.
-	Height    int    `csv:"height"`
-	Weight    int    `csv:"weight"`
+	Height    string `csv:"height"`
+	Weight    string `csv:"weight"`
 	Order     int    `csv:"order"`
 	IsDefault bool   `csv:"isDefault"`
 }
@@ -176,6 +176,92 @@ func TypeAsEnum(typeAsString string) (Type, error) {
 	case "あく":
 		return Dark, nil
 	case "フェアリー":
+		return Fairy, nil
+	default:
+		return 0, errors.New("invalid type")
+	}
+}
+
+// TypeAsString Type(ポケモンのタイプ)を文字列に変換します。
+func TypeAsString(typeAsEnum Type) string {
+	switch typeAsEnum {
+	case Normal:
+		return "ノーマル"
+	case Fighting:
+		return "かくとう"
+	case Flying:
+		return "ひこう"
+	case Poison:
+		return "どく"
+	case Ground:
+		return "じめん"
+	case Rock:
+		return "いわ"
+	case Bug:
+		return "むし"
+	case Ghost:
+		return "ゴースト"
+	case Steel:
+		return "はがね"
+	case Fire:
+		return "ほのお"
+	case Water:
+		return "みず"
+	case Grass:
+		return "くさ"
+	case Electric:
+		return "でんき"
+	case Psychic:
+		return "エスパー"
+	case Ice:
+		return "こおり"
+	case Dragon:
+		return "ドラゴン"
+	case Dark:
+		return "あく"
+	case Fairy:
+		return "フェアリー"
+	default:
+		return ""
+	}
+}
+
+// SilvallyTypeAsEnum シルヴァディの識別子からタイプに変換します。
+func SilvallyTypeAsEnum(typeIdentifier string) (Type, error) {
+	switch typeIdentifier {
+	case "a":
+		return Fighting, nil
+	case "b":
+		return Flying, nil
+	case "c":
+		return Poison, nil
+	case "d":
+		return Ground, nil
+	case "e":
+		return Rock, nil
+	case "f":
+		return Bug, nil
+	case "g":
+		return Ghost, nil
+	case "h":
+		return Steel, nil
+	case "i":
+		return Fire, nil
+	case "j":
+		return Water, nil
+	case "k":
+		return Grass, nil
+	case "l":
+		return Electric, nil
+	case "m":
+		return Psychic, nil
+	case "n":
+		return Ice, nil
+	case "o":
+		return Dragon, nil
+	case "p":
+		return Dark, nil
+	case "q":
 		return Fairy, nil
 	default:
 		return 0, errors.New("invalid type")
